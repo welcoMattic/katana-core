@@ -58,8 +58,6 @@ class Katana
      */
     public function handle()
     {
-        error_reporting(error_reporting() & ~E_NOTICE & ~E_WARNING);
-
         $this->registerCommands();
 
         $this->application->run();
@@ -92,10 +90,21 @@ class Katana
             return new CompilerEngine($bladeCompiler);
         });
 
+        $dispatcher = new Dispatcher();
+
+        $dispatcher->listen('creating: *', function () {
+            /**
+             * On rendering Blade views we will mute error reporting as
+             * we don't care about undefined variables or type
+             * mistakes during compilation.
+             */
+            error_reporting(error_reporting() & ~E_NOTICE & ~E_WARNING);
+        });
+
         return new Factory(
             $resolver,
             new FileViewFinder($this->filesystem, [KATANA_SOURCE_DIR]),
-            new Dispatcher()
+            $dispatcher
         );
     }
 
