@@ -1,0 +1,23 @@
+{
+  "name": "themsaid/katana",
+  "description": "Static site & blog generator with markdown support.",
+  "keywords": ["flat-file","cms","static","site","generator","markdown","blade"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Mohamed Said",
+      "email": "themohamedsaid@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.9",
+    "symfony/console": "2.6.7",
+    "illuminate/view": "5.2.*",
+    "erusev/parsedown": "^1.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "Katana\\": "src"
+    }
+  }
+}
