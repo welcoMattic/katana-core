@@ -1,5 +1,5 @@
 {
-  "name": "themsaid/katana",
+  "name": "themsaid/katana-core",
   "description": "Static site & blog generator with markdown support.",
   "keywords": ["flat-file","cms","static","site","generator","markdown","blade"],
   "license": "MIT",
