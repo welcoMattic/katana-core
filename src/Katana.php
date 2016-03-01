@@ -133,10 +133,13 @@ class Katana
      */
     private function registerConstants()
     {
+        // A place to save Blade's cached compilations
         define('KATANA_CACHE_DIR', getcwd().'/_cache');
 
+        // A place to read site source files
         define('KATANA_SOURCE_DIR', getcwd().'/source');
 
+        // A place to output the generated site
         define('KATANA_PUBLIC_DIR', getcwd().'/public');
     }
 }
