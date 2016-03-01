@@ -13,10 +13,8 @@ class SiteBuilder
 {
     private $filesystem;
     private $viewFactory;
-    private $sourceDirectory;
-    private $siteDirectory;
-    private $fileHandler;
     private $blogPostHandler;
+    private $fileHandler;
 
     /**
      * The site configurations
@@ -59,18 +57,16 @@ class SiteBuilder
      * @param Filesystem $filesystem
      * @param Factory $viewFactory
      * @param $sourceDirectory
-     * @param $siteDirectory
+     * @param $publicDirectory
      */
-    public function __construct(Filesystem $filesystem, Factory $viewFactory, $sourceDirectory, $siteDirectory)
+    public function __construct(Filesystem $filesystem, Factory $viewFactory)
     {
         $this->filesystem = $filesystem;
         $this->viewFactory = $viewFactory;
-        $this->sourceDirectory = $sourceDirectory;
-        $this->siteDirectory = $siteDirectory;
 
-        $this->fileHandler = new BaseHandler($filesystem, $viewFactory, $siteDirectory);
+        $this->fileHandler = new BaseHandler($filesystem, $viewFactory);
 
-        $this->blogPostHandler = new BlogPostHandler($filesystem, $viewFactory, $siteDirectory);
+        $this->blogPostHandler = new BlogPostHandler($filesystem, $viewFactory);
     }
 
     /**
@@ -98,7 +94,7 @@ class SiteBuilder
 
         $this->buildViewsData();
 
-        $this->filesystem->cleanDirectory($this->siteDirectory);
+        $this->filesystem->cleanDirectory(KATANA_PUBLIC_DIR);
 
         $this->handleSiteFiles($otherFiles);
 
@@ -143,7 +139,7 @@ class SiteBuilder
      */
     private function getSiteFiles()
     {
-        return array_filter($this->filesystem->allFiles($this->sourceDirectory), function (SplFileInfo $file) {
+        return array_filter($this->filesystem->allFiles(KATANA_SOURCE_DIR), function (SplFileInfo $file) {
             return ! Str::startsWith($file->getRelativePathName(), $this->includesDirectory);
         });
     }
@@ -196,7 +192,6 @@ class SiteBuilder
         $builder = new BlogPaginationBuilder(
             $this->filesystem,
             $this->viewFactory,
-            $this->siteDirectory,
             $this->viewsData
         );
 

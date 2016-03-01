@@ -9,7 +9,6 @@ class BlogPaginationBuilder
 {
     private $filesystem;
     private $viewFactory;
-    private $siteDirectory;
     private $viewsData;
     private $pagesData;
 
@@ -18,14 +17,12 @@ class BlogPaginationBuilder
      *
      * @param Filesystem $filesystem
      * @param Factory $viewFactory
-     * @param $siteDirectory
      * @param array $viewsData
      */
-    public function __construct(Filesystem $filesystem, Factory $viewFactory, $siteDirectory, array $viewsData)
+    public function __construct(Filesystem $filesystem, Factory $viewFactory, array $viewsData)
     {
         $this->filesystem = $filesystem;
         $this->viewFactory = $viewFactory;
-        $this->siteDirectory = $siteDirectory;
         $this->viewsData = $viewsData;
     }
 
@@ -88,7 +85,7 @@ class BlogPaginationBuilder
 
         $pageContent = $this->viewFactory->make($view, $viewData)->render();
 
-        $directory = sprintf('%s/blog-page/%d', $this->siteDirectory, $pageIndex + 1);
+        $directory = sprintf('%s/blog-page/%d', KATANA_PUBLIC_DIR, $pageIndex + 1);
 
         $this->filesystem->makeDirectory($directory, 0755, true);
 

@@ -48,7 +48,7 @@ class BlogPostHandler extends BaseHandler
 
         $fileRelativePath = $this->getBlogPostSlug($fileBaseName);
 
-        return $this->siteDirectory."/$fileRelativePath";
+        return KATANA_PUBLIC_DIR."/$fileRelativePath";
     }
 
     /**

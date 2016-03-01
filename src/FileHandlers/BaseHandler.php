@@ -10,7 +10,6 @@ class BaseHandler
 {
     protected $filesystem;
     protected $viewFactory;
-    protected $siteDirectory;
 
     /**
      * The view file
@@ -38,11 +37,10 @@ class BaseHandler
      *
      * @param Filesystem $filesystem
      */
-    public function __construct(Filesystem $filesystem, Factory $viewFactory, $siteDirectory)
+    public function __construct(Filesystem $filesystem, Factory $viewFactory)
     {
         $this->filesystem = $filesystem;
         $this->viewFactory = $viewFactory;
-        $this->siteDirectory = $siteDirectory;
     }
 
     /**
@@ -129,7 +127,7 @@ class BaseHandler
             $fileRelativePath .= $fileRelativePath ? "/$fileBaseName" : $fileBaseName;
         }
 
-        return $this->siteDirectory.($fileRelativePath ? "/$fileRelativePath" : '');
+        return KATANA_PUBLIC_DIR.($fileRelativePath ? "/$fileRelativePath" : '');
     }
 
     /**
