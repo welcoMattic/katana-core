@@ -1,6 +1,6 @@
 <?php
 
-namespace Katana;
+namespace Katana\Commands;
 
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
@@ -12,6 +12,8 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\View\FileViewFinder;
 use Illuminate\Events\Dispatcher;
 use Illuminate\View\Factory;
+use Katana\SiteBuilder;
+use Katana\Blade;
 
 class BuildCommand extends Command
 {
