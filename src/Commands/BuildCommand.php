@@ -66,6 +66,6 @@ class BuildCommand extends Command
 
         $siteBuilder->build();
 
-        $output->writeln("<info>It's done your grace.</info>");
+        $output->writeln("<info>Site was generated successfully.</info>");
     }
 }
