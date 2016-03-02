@@ -103,7 +103,7 @@ class Katana
 
         return new Factory(
             $resolver,
-            new FileViewFinder($this->filesystem, [KATANA_SOURCE_DIR]),
+            new FileViewFinder($this->filesystem, [KATANA_CONTENT_DIR]),
             $dispatcher
         );
     }
@@ -137,7 +137,7 @@ class Katana
         define('KATANA_CACHE_DIR', getcwd().'/_cache');
 
         // A place to read site source files
-        define('KATANA_SOURCE_DIR', getcwd().'/source');
+        define('KATANA_CONTENT_DIR', getcwd().'/content');
 
         // A place to output the generated site
         define('KATANA_PUBLIC_DIR', getcwd().'/public');

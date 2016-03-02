@@ -139,7 +139,7 @@ class SiteBuilder
      */
     private function getSiteFiles()
     {
-        return array_filter($this->filesystem->allFiles(KATANA_SOURCE_DIR), function (SplFileInfo $file) {
+        return array_filter($this->filesystem->allFiles(KATANA_CONTENT_DIR), function (SplFileInfo $file) {
             return ! Str::startsWith($file->getRelativePathName(), $this->includesDirectory);
         });
     }
