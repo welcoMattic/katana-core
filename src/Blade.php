@@ -43,7 +43,7 @@ class Blade
          * the content as code blocks.
          */
         $this->bladeCompiler->directive('markdown', function () {
-            return "<?php echo \\Katana\\ParseDown::instance()->text(<<<'EOT'";
+            return "<?php echo \\Katana\\Markdown::parse(<<<'EOT'";
         });
 
         $this->bladeCompiler->directive('endmarkdown', function () {
