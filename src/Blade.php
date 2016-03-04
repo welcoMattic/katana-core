@@ -43,11 +43,11 @@ class Blade
          * the content as code blocks.
          */
         $this->bladeCompiler->directive('markdown', function () {
-            return "<?php echo \\Parsedown::instance()->text(preg_replace('/^[ ]+/m', '', <<<'EOT'";
+            return "<?php echo \\Katana\\ParseDown::instance()->text(<<<'EOT'";
         });
 
         $this->bladeCompiler->directive('endmarkdown', function () {
-            return "\nEOT\n)); ?>";
+            return "\nEOT\n); ?>";
         });
     }
 }
