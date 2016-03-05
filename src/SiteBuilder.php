@@ -175,7 +175,7 @@ class SiteBuilder
      */
     private function buildViewsData()
     {
-        $this->viewsData = $this->configs + ['blogPosts' => array_reverse($this->postsData)];
+        $this->viewsData = $this->configs + ['blogPosts' => array_reverse((array) $this->postsData)];
 
         $this->fileHandler->viewsData = $this->viewsData;
 
