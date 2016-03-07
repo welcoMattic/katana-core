@@ -56,12 +56,11 @@ class SiteBuilder
      *
      * @param Filesystem $filesystem
      * @param Factory $viewFactory
-     * @param $sourceDirectory
-     * @param $publicDirectory
      */
     public function __construct(Filesystem $filesystem, Factory $viewFactory)
     {
         $this->filesystem = $filesystem;
+
         $this->viewFactory = $viewFactory;
 
         $this->fileHandler = new BaseHandler($filesystem, $viewFactory);
