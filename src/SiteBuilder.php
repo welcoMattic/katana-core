@@ -104,6 +104,19 @@ class SiteBuilder
     }
 
     /**
+     * Set a configuration value
+     *
+     * @param $key
+     * @param $value
+     *
+     * @return void
+     */
+    public function setConfig($key, $value)
+    {
+        $this->configs[$key] = $value;
+    }
+
+    /**
      * Handle site pages
      *
      * @param array $files
@@ -164,7 +177,7 @@ class SiteBuilder
      */
     private function readConfigs()
     {
-        $this->configs = include getcwd().'/config.php';
+        $this->configs = array_merge(include getcwd().'/config.php', $this->configs);
     }
 
     /**
