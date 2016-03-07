@@ -2,9 +2,9 @@
 
 namespace Katana\Commands;
 
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Command\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\View\Factory;
@@ -48,7 +48,7 @@ class BuildCommand extends Command
     {
         $this->setName('build')
             ->setDescription('Generate the site static files.')
-            ->addArgument('base_url', InputArgument::OPTIONAL, 'The site base URL.', '/');
+            ->addOption('base_url', null, InputOption::VALUE_REQUIRED, 'The site base URL.', '/');
     }
 
     /**
@@ -66,7 +66,7 @@ class BuildCommand extends Command
             $this->viewFactory
         );
 
-        $siteBuilder->setConfig('base_url', $input->getArgument('base_url'));
+        $siteBuilder->setConfig('base_url', $input->getOption('base_url'));
 
         $siteBuilder->build();
 
