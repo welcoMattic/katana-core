@@ -37,11 +37,6 @@ class Blade
      */
     private function registerMarkdownDirective()
     {
-        /**
-         * The pattern here will trim all spaces at the beginning of every
-         * line, this for ParseDown not to mistakenly render
-         * the content as code blocks.
-         */
         $this->bladeCompiler->directive('markdown', function () {
             return "<?php echo \\Katana\\Markdown::parse(<<<'EOT'";
         });
