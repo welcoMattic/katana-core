@@ -23,9 +23,9 @@ class Markdown
     /**
      * Remove initial leading space from each line
      *
-     * Since @markdown can be inside any HTML element, there
-     * might be a leading space, we remove that to be able
-     * to render markdown in a clean and correct way.
+     * Since @markdown can be placed inside any HTML element, there might
+     * be leading space due to code editor indentation, here we trim it
+     * to avoid compiling the whole markdown block as a code block.
      *
      * @param $text
      *
@@ -33,12 +33,14 @@ class Markdown
      */
     private static function cleanLeadingSpace($text)
     {
-        $firstLine = explode("\n", $text)[0];
+        $i = 0;
+
+        while (! $firstLine = explode("\n", $text)[$i]) {
+            $i ++;
+        }
 
         preg_match('/^( *)/', $firstLine, $matches);
 
-        $spaceCount = strlen($matches[1]);
-
-        return preg_replace('/^[ ]{'.$spaceCount.'}/m', '', $text);
+        return preg_replace('/^[ ]{'.strlen($matches[1]).'}/m', '', $text);
     }
 }
