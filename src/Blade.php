@@ -56,7 +56,9 @@ class Blade
     private function registerURLDirective()
     {
         $this->bladeCompiler->directive('url', function ($expression) {
-            return "<?php echo str_replace('//', '/', \$base_url.'/'.$expression);  ?>";
+            $expression = substr($expression, 1, - 1);
+
+            return "<?php echo str_replace('//', '/', \$base_url.'/'.trim($expression, '/'));  ?>";
         });
     }
 }
