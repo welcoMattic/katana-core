@@ -17,35 +17,35 @@ class SiteBuilder
     private $fileHandler;
 
     /**
-     * The site configurations
+     * The site configurations.
      *
      * @var array
      */
     private $configs;
 
     /**
-     * The data included in every view file of a post
+     * The data included in every view file of a post.
      *
      * @var array
      */
     private $postsData;
 
     /**
-     * The data to pass to every view
+     * The data to pass to every view.
      *
      * @var array
      */
     private $viewsData;
 
     /**
-     * The directory that contains blade sub views
+     * The directory that contains blade sub views.
      *
      * @var array
      */
     protected $includesDirectory = '_includes';
 
     /**
-     * The directory that contains blog posts
+     * The directory that contains blog posts.
      *
      * @var array
      */
@@ -69,7 +69,7 @@ class SiteBuilder
     }
 
     /**
-     * Build the site from blade views
+     * Build the site from blade views.
      *
      * @return void
      */
@@ -104,10 +104,10 @@ class SiteBuilder
     }
 
     /**
-     * Set a configuration value
+     * Set a configuration value.
      *
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param string $value
      *
      * @return void
      */
@@ -117,7 +117,7 @@ class SiteBuilder
     }
 
     /**
-     * Handle site pages
+     * Handle non-blog site files.
      *
      * @param array $files
      *
@@ -131,7 +131,7 @@ class SiteBuilder
     }
 
     /**
-     * Handle blog posts
+     * Handle blog posts files.
      *
      * @param array $files
      *
@@ -145,7 +145,7 @@ class SiteBuilder
     }
 
     /**
-     * Get the site pages that'll be generated
+     * Get the site files that will be converted into pages.
      *
      * @return SplFileInfo[]
      */
@@ -157,7 +157,7 @@ class SiteBuilder
     }
 
     /**
-     * Read the data of every blog post
+     * Read the data of every blog post.
      *
      * @param array $files
      *
@@ -171,7 +171,7 @@ class SiteBuilder
     }
 
     /**
-     * Read site configs
+     * Read site configurations.
      *
      * @return void
      */
@@ -181,7 +181,7 @@ class SiteBuilder
     }
 
     /**
-     * Build array of data to be passed to every view
+     * Build array of data to be passed to every view.
      *
      * @return void
      */
@@ -195,7 +195,7 @@ class SiteBuilder
     }
 
     /**
-     * Build the blog pagination directories
+     * Build the blog pagination files.
      *
      * @return void
      */

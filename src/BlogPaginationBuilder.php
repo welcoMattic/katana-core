@@ -27,7 +27,7 @@ class BlogPaginationBuilder
     }
 
     /**
-     * Build blog pagination directories
+     * Build blog pagination files.
      *
      * @return void
      */
@@ -45,7 +45,7 @@ class BlogPaginationBuilder
     }
 
     /**
-     * Get the name of the view to be used for pages
+     * Get the name of the view to be used for pages.
      *
      * @return mixed
      * @throws \Exception
@@ -64,11 +64,11 @@ class BlogPaginationBuilder
     }
 
     /**
-     * Build the view with list of posts for every page
+     * Build a pagination page.
      *
-     * @param $pageIndex
-     * @param $view
-     * @param $posts
+     * @param integer $pageIndex
+     * @param string $view
+     * @param array $posts
      *
      * @return void
      */

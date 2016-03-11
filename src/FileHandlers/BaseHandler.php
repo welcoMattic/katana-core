@@ -12,21 +12,21 @@ class BaseHandler
     protected $viewFactory;
 
     /**
-     * The view file
+     * The view file.
      *
      * @var SplFileInfo
      */
     protected $file;
 
     /**
-     * The path to the blade view
+     * The path to the blade view.
      *
      * @var string
      */
     protected $viewPath;
 
     /**
-     * Data to be passed to every view
+     * Data to be passed to every view.
      *
      * @var array
      */
@@ -44,6 +44,8 @@ class BaseHandler
     }
 
     /**
+     * Convert a blade view into a site page.
+     *
      * @param SplFileInfo $file
      *
      * @return void
@@ -71,7 +73,7 @@ class BaseHandler
     }
 
     /**
-     * Get the content of a file after rendering
+     * Get the content of the file after rendering.
      *
      * @param SplFileInfo $file
      *
@@ -87,7 +89,7 @@ class BaseHandler
     }
 
     /**
-     * Render the blade file
+     * Render the blade file.
      *
      * @return string
      */
@@ -97,7 +99,7 @@ class BaseHandler
     }
 
     /**
-     * Prepare and get the directory name for pretty links
+     * Prepare and get the directory name for pretty URLs.
      *
      * @return string
      */
@@ -113,7 +115,7 @@ class BaseHandler
     }
 
     /**
-     * Generate directory path to be used for the file pretty name
+     * Generate directory path to be used for the file pretty name.
      *
      * @return string
      */
@@ -131,7 +133,7 @@ class BaseHandler
     }
 
     /**
-     * Get the path of the view
+     * Get the path of the view.
      *
      * @return string
      */
@@ -141,9 +143,9 @@ class BaseHandler
     }
 
     /**
-     * Prepare the data for the blog landing page
+     * Prepare the data for the blog landing page.
      *
-     * We will pass only the first n posts and a next page path
+     * We will pass only the first n posts and a next page path.
      *
      * @return void
      */

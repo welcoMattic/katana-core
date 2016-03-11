@@ -15,21 +15,21 @@ use Illuminate\View\Factory;
 class Katana
 {
     /**
-     * The Symfony console instance
+     * The Symfony console instance.
      *
      * @var SymfonyConsole
      */
     private $application;
 
     /**
-     * The view factory instance
+     * The view factory instance.
      *
      * @var Factory
      */
     private $viewFactory;
 
     /**
-     * The file system instance
+     * The file system instance.
      *
      * @var Filesystem
      */
@@ -52,7 +52,7 @@ class Katana
     }
 
     /**
-     * Handle incoming console requests
+     * Handle incoming console requests.
      *
      * @return void
      */
@@ -64,7 +64,7 @@ class Katana
     }
 
     /**
-     * Register application commands
+     * Register application commands.
      *
      * @return void
      */
@@ -109,7 +109,7 @@ class Katana
     }
 
     /**
-     * Create the view factory with a Blade Compiler.
+     * Create the Blade Compiler instance.
      *
      * @return BladeCompiler
      */
@@ -127,19 +127,19 @@ class Katana
     }
 
     /**
-     * Register global constants
+     * Register global constants.
      *
      * @return void
      */
     private function registerConstants()
     {
-        // A place to save Blade's cached compilations
+        // A place to save Blade's cached compilations.
         define('KATANA_CACHE_DIR', getcwd().'/_cache');
 
-        // A place to read site source files
+        // A place to read site source files.
         define('KATANA_CONTENT_DIR', getcwd().'/content');
 
-        // A place to output the generated site
+        // A place to output the generated site.
         define('KATANA_PUBLIC_DIR', getcwd().'/public');
     }
 }

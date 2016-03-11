@@ -13,12 +13,14 @@ use Katana\SiteBuilder;
 class BuildCommand extends Command
 {
     /**
+     * The FileSystem instance.
+     *
      * @var Filesystem
      */
     private $filesystem;
 
     /**
-     * The view factory
+     * The view factory instance.
      *
      * @var Factory
      */

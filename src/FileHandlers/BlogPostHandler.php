@@ -7,7 +7,7 @@ use Symfony\Component\Finder\SplFileInfo;
 class BlogPostHandler extends BaseHandler
 {
     /**
-     * Get the blog post data
+     * Get the blog post data.
      *
      * @param SplFileInfo $file
      *
@@ -38,7 +38,7 @@ class BlogPostHandler extends BaseHandler
     }
 
     /**
-     * Generate directory path to be used for the file pretty name
+     * Generate directory path to be used for pretty URLs.
      *
      * @return string
      */
@@ -52,7 +52,7 @@ class BlogPostHandler extends BaseHandler
     }
 
     /**
-     * Generate blog post slug
+     * Generate blog post slug.
      *
      * @param string $fileBaseName
      *

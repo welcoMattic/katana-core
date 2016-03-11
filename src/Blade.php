@@ -23,7 +23,7 @@ class Blade
     }
 
     /**
-     * Get the blade compiler after extension
+     * Get the blade compiler after extension.
      *
      * @return BladeCompiler
      */
@@ -33,7 +33,7 @@ class Blade
     }
 
     /**
-     * Register the @markdown blade directives
+     * Register the @markdown blade directives.
      *
      * @return void
      */
@@ -49,7 +49,7 @@ class Blade
     }
 
     /**
-     * Register the @url blade directive
+     * Register the @url blade directive.
      *
      * @return void
      */
