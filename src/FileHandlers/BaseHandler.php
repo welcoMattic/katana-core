@@ -2,6 +2,7 @@
 
 namespace Katana\FileHandlers;
 
+use Katana\Markdown;
 use Symfony\Component\Finder\SplFileInfo;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\View\Factory;
@@ -66,7 +67,7 @@ class BaseHandler
             sprintf(
                 '%s/%s',
                 $this->prepareAndGetDirectory(),
-                $file->getExtension() == 'php' ? 'index.html' : $file->getFilename()
+                in_array($file->getExtension(), ['php', 'md']) ? 'index.html' : $file->getFilename()
             ),
             $content
         );
@@ -82,7 +83,9 @@ class BaseHandler
     private function getFileContent()
     {
         if (ends_with($this->file->getFilename(), '.blade.php')) {
-            return $this->renderBlade($this->file);
+            return $this->renderBlade();
+        } elseif (ends_with($this->file->getFilename(), '.md')) {
+            return $this->renderMarkdown();
         }
 
         return $this->file->getContents();
@@ -96,6 +99,16 @@ class BaseHandler
     protected function renderBlade()
     {
         return $this->viewFactory->make($this->viewPath, $this->viewsData)->render();
+    }
+
+    /**
+     * Render the markdown file.
+     *
+     * @return string
+     */
+    protected function renderMarkdown()
+    {
+        return Markdown::parseWithYAML($this->file->getContents());
     }
 
     /**
@@ -121,11 +134,11 @@ class BaseHandler
      */
     protected function getDirectoryPrettyName()
     {
-        $fileBaseName = $this->file->getBasename('.blade.php');
+        $fileBaseName = $this->file->getBasename('.'.$this->file->getExtension());
 
         $fileRelativePath = $this->file->getRelativePath();
 
-        if ($this->file->getExtension() == 'php' && $fileBaseName != 'index') {
+        if (in_array($this->file->getExtension(), ['php', 'md']) && $fileBaseName != 'index') {
             $fileRelativePath .= $fileRelativePath ? "/$fileBaseName" : $fileBaseName;
         }
 
@@ -139,7 +152,7 @@ class BaseHandler
      */
     private function getViewPath()
     {
-        return str_replace('.blade.php', '', $this->file->getRelativePathname());
+        return str_replace(['.blade.php', '.md'], '', $this->file->getRelativePathname());
     }
 
     /**

@@ -78,8 +78,8 @@ class BlogPaginationBuilder
             $this->viewsData,
             [
                 'paginatedBlogPosts' => $posts,
-                'previousPage' => isset($this->pagesData[$pageIndex - 1]) ? '/blog-page/'.($pageIndex) : null,
-                'nextPage' => isset($this->pagesData[$pageIndex + 1]) ? '/blog-page/'.($pageIndex + 2) : null,
+                'previousPage' => $this->getPreviousPageLink($pageIndex),
+                'nextPage' => $this->getNextPageLink($pageIndex),
             ]
         );
 
@@ -93,5 +93,57 @@ class BlogPaginationBuilder
             sprintf('%s/%s', $directory, 'index.html'),
             $pageContent
         );
+    }
+
+    /**
+     * Get the link of the page before the given page.
+     *
+     * @param integer $currentPageIndex
+     *
+     * @return null|string
+     */
+    private function getPreviousPageLink($currentPageIndex)
+    {
+        if (! isset($this->pagesData[$currentPageIndex - 1])) {
+            return null;
+        } elseif ($currentPageIndex == 1) {
+            // If the current page is the second, then the first page's
+            // link should point to the blog's main view.
+            return '/'.$this->getBlogListPagePath();
+        }
+
+        return '/blog-page/'.$currentPageIndex;
+    }
+
+    /**
+     * Get the link of the page after the given page.
+     *
+     * @param integer $currentPageIndex
+     *
+     * @return null|string
+     */
+    private function getNextPageLink($currentPageIndex)
+    {
+        if (! isset($this->pagesData[$currentPageIndex + 1])) {
+            return null;
+        }
+
+        return '/blog-page/'.($currentPageIndex + 2);
+    }
+
+    /**
+     * Get the URL path to the blog list page.
+     *
+     * @return string
+     */
+    private function getBlogListPagePath()
+    {
+        $path = str_replace('.', '/', $this->viewsData['postsListView']);
+
+        if (ends_with($path, 'index')) {
+            return rtrim($path, '/index');
+        }
+
+        return $path;
     }
 }
