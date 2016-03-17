@@ -17,6 +17,13 @@ class SiteBuilder
     private $fileHandler;
 
     /**
+     * The application environment.
+     *
+     * @var string
+     */
+    private $environment;
+
+    /**
      * The site configurations.
      *
      * @var array
@@ -56,12 +63,15 @@ class SiteBuilder
      *
      * @param Filesystem $filesystem
      * @param Factory $viewFactory
+     * @param string $environment
      */
-    public function __construct(Filesystem $filesystem, Factory $viewFactory)
+    public function __construct(Filesystem $filesystem, Factory $viewFactory, $environment)
     {
         $this->filesystem = $filesystem;
 
         $this->viewFactory = $viewFactory;
+
+        $this->environment = $environment;
 
         $this->fileHandler = new BaseHandler($filesystem, $viewFactory);
 
@@ -117,6 +127,28 @@ class SiteBuilder
     }
 
     /**
+     * Read site configurations based on the current environment.
+     *
+     * It loads the default config file, then the environment specific
+     * config file, if found, and finally merges any other configs.
+     *
+     * @return void
+     */
+    private function readConfigs()
+    {
+        $configs = include getcwd().'/config.php';
+
+        if (
+            $this->environment != 'default' &&
+            $this->filesystem->exists(getcwd().'/'.$fileName = "config-{$this->environment}.php")
+        ) {
+            $configs = array_merge($configs, include getcwd().'/'.$fileName);
+        }
+
+        $this->configs = array_merge($configs, (array) $this->configs);
+    }
+
+    /**
      * Handle non-blog site files.
      *
      * @param array $files
@@ -168,16 +200,6 @@ class SiteBuilder
         foreach ($files as $file) {
             $this->postsData[] = $this->blogPostHandler->getPostData($file);
         }
-    }
-
-    /**
-     * Read site configurations.
-     *
-     * @return void
-     */
-    private function readConfigs()
-    {
-        $this->configs = array_merge(include getcwd().'/config.php', $this->configs);
     }
 
     /**

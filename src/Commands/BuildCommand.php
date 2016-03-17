@@ -50,7 +50,7 @@ class BuildCommand extends Command
     {
         $this->setName('build')
             ->setDescription('Generate the site static files.')
-            ->addOption('base_url', null, InputOption::VALUE_REQUIRED, 'The site base URL.', '/');
+            ->addOption('env', null, InputOption::VALUE_REQUIRED, 'Application Environment.', 'default');
     }
 
     /**
@@ -65,10 +65,9 @@ class BuildCommand extends Command
     {
         $siteBuilder = new SiteBuilder(
             $this->filesystem,
-            $this->viewFactory
+            $this->viewFactory,
+            $input->getOption('env')
         );
-
-        $siteBuilder->setConfig('base_url', $input->getOption('base_url'));
 
         $siteBuilder->build();
 
