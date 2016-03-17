@@ -2,6 +2,8 @@
 
 namespace Katana;
 
+use Mni\FrontYAML\Parser;
+
 class Markdown
 {
     /**
@@ -23,12 +25,20 @@ class Markdown
     /**
      * Parse markdown with YAML headers
      *
-     * @param string $getContents
+     * This method returns an array of: content as the first member and
+     * YAML values as the second member.
      *
-     * @return string
+     * @param string $text
+     *
+     * @return array
      */
-    public static function parseWithYAML($getContents)
+    public static function parseWithYAML($text)
     {
+        $parser = new Parser();
+
+        $parsed = $parser->parse($text);
+
+        return [$parsed->getContent(), $parsed->getYAML()];
     }
 
     /**

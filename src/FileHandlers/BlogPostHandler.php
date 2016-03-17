@@ -3,6 +3,7 @@
 namespace Katana\FileHandlers;
 
 use Symfony\Component\Finder\SplFileInfo;
+use Katana\Markdown;
 
 class BlogPostHandler extends BaseHandler
 {
@@ -15,14 +16,21 @@ class BlogPostHandler extends BaseHandler
      */
     public function getPostData(SplFileInfo $file)
     {
-        $view = $this->viewFactory->make(str_replace('.blade.php', '', $file->getRelativePathname()));
+        if ($file->getExtension() == 'md') {
+            $postData = Markdown::parseWithYAML($file->getContents())[1];
+        } else {
+            $view = $this->viewFactory->make(str_replace('.blade.php', '', $file->getRelativePathname()));
 
-        $postData = [];
+            $postData = [];
 
-        $view->render(function ($view) use (&$postData) {
-            $postData = array_where($view->getFactory()->getSections(), function ($title) {
-                return starts_with($title, 'post::');
+            $view->render(function ($view) use (&$postData) {
+                $postData = $view->getFactory()->getSections();
             });
+        }
+
+        // Get only values with keys starting with post::
+        $postData = array_where($postData, function ($key) {
+            return starts_with($key, 'post::');
         });
 
         // Remove 'post::' from $postData keys
@@ -32,7 +40,7 @@ class BlogPostHandler extends BaseHandler
             unset($postData[$key]);
         }
 
-        $postData['path'] = '/'.$this->getBlogPostSlug($file->getBasename('.blade.php'));
+        $postData['path'] = '/'.$this->getBlogPostSlug($this->getFileName($file));
 
         return json_decode(json_encode($postData), false);
     }
@@ -44,7 +52,7 @@ class BlogPostHandler extends BaseHandler
      */
     protected function getDirectoryPrettyName()
     {
-        $fileBaseName = $this->file->getBasename('.blade.php');
+        $fileBaseName = $this->getFileName();
 
         $fileRelativePath = $this->getBlogPostSlug($fileBaseName);
 

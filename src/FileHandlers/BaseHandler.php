@@ -2,7 +2,7 @@
 
 namespace Katana\FileHandlers;
 
-use Katana\Markdown;
+use Katana\MarkdownFileBuilder;
 use Symfony\Component\Finder\SplFileInfo;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\View\Factory;
@@ -108,7 +108,9 @@ class BaseHandler
      */
     protected function renderMarkdown()
     {
-        return Markdown::parseWithYAML($this->file->getContents());
+        $markdownFileBuilder = new MarkdownFileBuilder($this->filesystem, $this->viewFactory, $this->file, $this->viewsData);
+
+        return $markdownFileBuilder->render();
     }
 
     /**
@@ -134,7 +136,7 @@ class BaseHandler
      */
     protected function getDirectoryPrettyName()
     {
-        $fileBaseName = $this->file->getBasename('.'.$this->file->getExtension());
+        $fileBaseName = $this->getFileName();
 
         $fileRelativePath = $this->file->getRelativePath();
 
@@ -171,5 +173,17 @@ class BaseHandler
         $this->viewsData['previousPage'] = null;
 
         $this->viewsData['paginatedBlogPosts'] = array_slice($this->viewsData['blogPosts'], 0, $postsPerPage, true);
+    }
+
+    /**
+     * Get the file name without the extension.
+     *
+     * @return string
+     */
+    protected function getFileName(SplFileInfo $file = null)
+    {
+        $file = $file ?: $this->file;
+
+        return str_replace(['.blade.php', '.php', '.md'], '', $file->getBasename());
     }
 }

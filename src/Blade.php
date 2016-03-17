@@ -3,6 +3,7 @@
 namespace Katana;
 
 use Illuminate\View\Compilers\BladeCompiler;
+use Illuminate\View\Factory;
 
 class Blade
 {
