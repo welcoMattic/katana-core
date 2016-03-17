@@ -103,7 +103,7 @@ class MarkdownFileBuilder
         $sections = '';
 
         foreach ($this->fileYAML as $name => $value) {
-            $sections .= "@section('$name', '$value')\n\r";
+            $sections .= "@section('$name', '".addslashes($value)."')\n\r";
         }
 
         return
