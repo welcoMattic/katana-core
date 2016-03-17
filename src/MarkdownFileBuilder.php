@@ -107,12 +107,10 @@ class MarkdownFileBuilder
         }
 
         return
-            "@extends('{$this->fileYAML['extends']}')
+            "@extends('{$this->fileYAML['view::extends']}')
             $sections
-            @section('{$this->fileYAML['sectionName']}')
-
+            @section('{$this->fileYAML['view::yields']}')
             {$this->fileContent}
-
             @stop";
     }
 
