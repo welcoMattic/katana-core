@@ -82,7 +82,7 @@ class BaseHandler
     private function getFileContent()
     {
         if (ends_with($this->file->getFilename(), '.blade.php')) {
-            return $this->renderBlade($this->file);
+            return $this->renderBlade();
         }
 
         return $this->file->getContents();
