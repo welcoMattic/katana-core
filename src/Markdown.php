@@ -21,6 +21,17 @@ class Markdown
     }
 
     /**
+     * Parse markdown with YAML headers
+     *
+     * @param string $getContents
+     *
+     * @return string
+     */
+    public static function parseWithYAML($getContents)
+    {
+    }
+
+    /**
      * Remove initial leading space from each line
      *
      * Since @markdown can be placed inside any HTML element, there might
