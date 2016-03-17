@@ -4,8 +4,8 @@ namespace Katana;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\View\Compilers\BladeCompiler;
-use Illuminate\View\Engines\CompilerEngine;
 use Symfony\Component\Finder\SplFileInfo;
+use Illuminate\View\Engines\PhpEngine;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\View\Factory;
 
@@ -40,7 +40,7 @@ class MarkdownFileBuilder
     /**
      * The CompilerEngine instance.
      *
-     * @var CompilerEngine
+     * @var PhpEngine
      */
     protected $engine;
 
@@ -127,13 +127,13 @@ class MarkdownFileBuilder
     }
 
     /**
-     * Return the Compiler Engine from the view factory.
+     * Return the PhpEngine.
      *
-     * @return CompilerEngine
+     * @return PhpEngine
      */
     private function getEngine()
     {
-        return $this->viewFactory->getEngineFromPath('blade.php');
+        return new PhpEngine;
     }
 
     /**
