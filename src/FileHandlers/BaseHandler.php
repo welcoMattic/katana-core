@@ -67,7 +67,7 @@ class BaseHandler
             sprintf(
                 '%s/%s',
                 $this->prepareAndGetDirectory(),
-                in_array($file->getExtension(), ['php', 'md']) ? 'index.html' : $file->getFilename()
+                ends_with($file->getExtension(), ['.blade.php', 'md']) ? 'index.html' : $file->getFilename()
             ),
             $content
         );
