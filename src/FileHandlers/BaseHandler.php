@@ -27,6 +27,13 @@ class BaseHandler
     protected $viewPath;
 
     /**
+     * the path to the generated directory.
+     *
+     * @var string
+     */
+    protected $directory;
+
+    /**
      * Data to be passed to every view.
      *
      * @var array
@@ -56,6 +63,10 @@ class BaseHandler
         $this->file = $file;
 
         $this->viewPath = $this->getViewPath();
+
+        $this->directory = $this->getDirectoryPrettyName();
+
+        $this->appendViewInformationToData();
 
         if (@$this->viewsData['enableBlog'] && @$this->viewsData['postsListView'] == $this->viewPath) {
             $this->prepareBlogIndexViewData();
@@ -120,13 +131,11 @@ class BaseHandler
      */
     private function prepareAndGetDirectory()
     {
-        $directory = $this->getDirectoryPrettyName();
-
-        if (! $this->filesystem->isDirectory($directory)) {
-            $this->filesystem->makeDirectory($directory, 0755, true);
+        if (! $this->filesystem->isDirectory($this->directory)) {
+            $this->filesystem->makeDirectory($this->directory, 0755, true);
         }
 
-        return $directory;
+        return $this->directory;
     }
 
     /**
@@ -185,5 +194,17 @@ class BaseHandler
         $file = $file ?: $this->file;
 
         return str_replace(['.blade.php', '.php', '.md'], '', $file->getBasename());
+    }
+
+    /**
+     * Append the view file information to the view data.
+     *
+     * @return void
+     */
+    private function appendViewInformationToData()
+    {
+        $this->viewsData['currentViewPath'] = $this->viewPath;
+
+        $this->viewsData['currentUrlPath'] = ($path = str_replace(KATANA_PUBLIC_DIR, '', $this->directory)) ? $path : '/';
     }
 }
