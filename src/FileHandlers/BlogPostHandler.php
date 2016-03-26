@@ -16,10 +16,12 @@ class BlogPostHandler extends BaseHandler
      */
     public function getPostData(SplFileInfo $file)
     {
-        if ($file->getExtension() == 'md') {
-            $postData = Markdown::parseWithYAML($file->getContents())[1];
+        $this->file = $file;
+
+        if ($this->file->getExtension() == 'md') {
+            $postData = Markdown::parseWithYAML($this->file->getContents())[1];
         } else {
-            $view = $this->viewFactory->make(str_replace('.blade.php', '', $file->getRelativePathname()));
+            $view = $this->viewFactory->make(str_replace('.blade.php', '', $this->file->getRelativePathname()));
 
             $postData = [];
 
@@ -40,7 +42,7 @@ class BlogPostHandler extends BaseHandler
             unset($postData[$key]);
         }
 
-        $postData['path'] = '/'.$this->getBlogPostSlug($this->getFileName($file));
+        $postData['path'] = str_replace(KATANA_PUBLIC_DIR, '', $this->getDirectoryPrettyName());
 
         return json_decode(json_encode($postData), false);
     }
@@ -52,6 +54,10 @@ class BlogPostHandler extends BaseHandler
      */
     protected function getDirectoryPrettyName()
     {
+        if (str_is('*/_blog/*/*', $this->file->getPathname())) {
+            return str_replace('/_blog', '', parent::getDirectoryPrettyName());
+        }
+
         $fileBaseName = $this->getFileName();
 
         $fileRelativePath = $this->getBlogPostSlug($fileBaseName);

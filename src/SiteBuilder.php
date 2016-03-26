@@ -88,11 +88,11 @@ class SiteBuilder
         $files = $this->getSiteFiles();
 
         $blogPostsFiles = array_filter($files, function ($file) {
-            return $file->getRelativePath() == $this->blogDirectory;
+            return str_contains($file->getRelativePath(), '_blog');
         });
 
         $otherFiles = array_filter($files, function ($file) {
-            return $file->getRelativePath() != $this->blogDirectory;
+            return ! str_contains($file->getRelativePath(), '_blog');
         });
 
         $this->readConfigs();
