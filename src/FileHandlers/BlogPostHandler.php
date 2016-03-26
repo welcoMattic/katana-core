@@ -54,6 +54,9 @@ class BlogPostHandler extends BaseHandler
      */
     protected function getDirectoryPrettyName()
     {
+        // If the post is inside a child directory of the _blog directory then
+        // we deal with it like regular site files and generate a nested
+        // directories based post path with exact file name.
         if (str_is('*/_blog/*/*', $this->file->getPathname())) {
             return str_replace('/_blog', '', parent::getDirectoryPrettyName());
         }
