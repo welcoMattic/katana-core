@@ -71,16 +71,6 @@ class BuildCommand extends Command
 
         $siteBuilder->build();
 
-        $output->writeln("<info>,.   ,.");
-        $output->writeln("\.\ /,/");
-        $output->writeln(" Y Y f");
-        $output->writeln(" |. .|");
-        $output->writeln("(\"_, l     Website was built successfully...");
-        $output->writeln(" ,- , \\    Happy Easter!");
-        $output->writeln("(_)(_) Y,.");
-        $output->writeln(" _j _j |,'");
-        $output->writeln("(_,(__,'</info>");
-
-//        $output->writeln("<info>Site was generated successfully.</info>");
+        $output->writeln("<info>Site was generated successfully.</info>");
     }
 }
