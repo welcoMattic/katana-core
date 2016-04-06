@@ -147,7 +147,7 @@ class BaseHandler
     {
         $fileBaseName = $this->getFileName();
 
-        $fileRelativePath = $this->file->getRelativePath();
+        $fileRelativePath = $this->normalizePath($this->file->getRelativePath());
 
         if (in_array($this->file->getExtension(), ['php', 'md']) && $fileBaseName != 'index') {
             $fileRelativePath .= $fileRelativePath ? "/$fileBaseName" : $fileBaseName;
@@ -206,5 +206,15 @@ class BaseHandler
         $this->viewsData['currentViewPath'] = $this->viewPath;
 
         $this->viewsData['currentUrlPath'] = ($path = str_replace(KATANA_PUBLIC_DIR, '', $this->directory)) ? $path : '/';
+    }
+    
+    /**
+     * Normalize Windows file paths to UNIX style
+     *
+     * @return string
+     */
+    protected function normalizePath($path)
+    {
+        return str_replace("\\", '/', $path);
     }
 }
