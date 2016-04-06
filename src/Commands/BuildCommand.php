@@ -51,7 +51,7 @@ class BuildCommand extends Command
         $this->setName('build')
             ->setDescription('Generate the site static files.')
             ->addOption('env', null, InputOption::VALUE_REQUIRED, 'Application Environment.', 'default')
-            ->addOption('force', null, InputOption::VALUE_NONE, 'Clear the cache before building');
+            ->addOption('force', null, InputOption::VALUE_NONE, 'Clear the cache before building.');
     }
 
     /**

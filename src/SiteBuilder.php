@@ -59,7 +59,7 @@ class SiteBuilder
     protected $blogDirectory = '_blog';
 
     /**
-     * Clear the cache before building
+     * Clear the cache before building.
      *
      * @var array
      */
