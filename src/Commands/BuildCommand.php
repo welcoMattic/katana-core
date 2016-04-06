@@ -50,7 +50,8 @@ class BuildCommand extends Command
     {
         $this->setName('build')
             ->setDescription('Generate the site static files.')
-            ->addOption('env', null, InputOption::VALUE_REQUIRED, 'Application Environment.', 'default');
+            ->addOption('env', null, InputOption::VALUE_REQUIRED, 'Application Environment.', 'default')
+            ->addOption('force', null, InputOption::VALUE_NONE, 'Clear the cache before building');
     }
 
     /**
@@ -66,7 +67,8 @@ class BuildCommand extends Command
         $siteBuilder = new SiteBuilder(
             $this->filesystem,
             $this->viewFactory,
-            $input->getOption('env')
+            $input->getOption('env'),
+            $input->getOption('force')
         );
 
         $siteBuilder->build();

@@ -59,13 +59,20 @@ class SiteBuilder
     protected $blogDirectory = '_blog';
 
     /**
+     * Clear the cache before building
+     *
+     * @var array
+     */
+    protected $forceBuild = false;
+    
+    /**
      * SiteBuilder constructor.
      *
      * @param Filesystem $filesystem
      * @param Factory $viewFactory
      * @param string $environment
      */
-    public function __construct(Filesystem $filesystem, Factory $viewFactory, $environment)
+    public function __construct(Filesystem $filesystem, Factory $viewFactory, $environment, $forceBuild = false)
     {
         $this->filesystem = $filesystem;
 
@@ -76,6 +83,8 @@ class SiteBuilder
         $this->fileHandler = new BaseHandler($filesystem, $viewFactory);
 
         $this->blogPostHandler = new BlogPostHandler($filesystem, $viewFactory);
+        
+        $this->forceBuild = $forceBuild;
     }
 
     /**
@@ -105,6 +114,10 @@ class SiteBuilder
 
         $this->filesystem->cleanDirectory(KATANA_PUBLIC_DIR);
 
+        if ($this->forceBuild) {
+            $this->filesystem->cleanDirectory(KATANA_CACHE_DIR);
+        }
+        
         $this->handleSiteFiles($otherFiles);
 
         if (@$this->configs['enableBlog']) {
