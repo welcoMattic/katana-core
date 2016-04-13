@@ -112,7 +112,7 @@ class BlogPaginationBuilder
             return '/'.$this->getBlogListPagePath();
         }
 
-        return '/blog-page/'.$currentPageIndex;
+        return '/blog-page/'.$currentPageIndex.'/';
     }
 
     /**
@@ -128,7 +128,7 @@ class BlogPaginationBuilder
             return null;
         }
 
-        return '/blog-page/'.($currentPageIndex + 2);
+        return '/blog-page/'.($currentPageIndex + 2).'/';
     }
 
     /**

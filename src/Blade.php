@@ -59,7 +59,7 @@ class Blade
         $this->bladeCompiler->directive('url', function ($expression) {
             $expression = substr($expression, 1, - 1);
 
-            return "<?php echo str_replace(array('///', '//'), '/', \$base_url.'/'.trim($expression, '/').'/');  ?>";
+            return "<?php echo str_replace(['///', '//'], '/', \$base_url.'/'.trim($expression, '/').'/');  ?>";
         });
     }
 }

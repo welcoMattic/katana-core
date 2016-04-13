@@ -42,7 +42,7 @@ class BlogPostHandler extends BaseHandler
             unset($postData[$key]);
         }
 
-        $postData['path'] = str_replace(KATANA_PUBLIC_DIR, '', $this->getDirectoryPrettyName());
+        $postData['path'] = str_replace(KATANA_PUBLIC_DIR, '', $this->getDirectoryPrettyName()).'/';
 
         return json_decode(json_encode($postData), false);
     }
