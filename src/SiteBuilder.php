@@ -64,7 +64,7 @@ class SiteBuilder
      * @var array
      */
     protected $forceBuild = false;
-    
+
     /**
      * SiteBuilder constructor.
      *
@@ -83,7 +83,7 @@ class SiteBuilder
         $this->fileHandler = new BaseHandler($filesystem, $viewFactory);
 
         $this->blogPostHandler = new BlogPostHandler($filesystem, $viewFactory);
-        
+
         $this->forceBuild = $forceBuild;
     }
 
@@ -117,7 +117,7 @@ class SiteBuilder
         if ($this->forceBuild) {
             $this->filesystem->cleanDirectory(KATANA_CACHE_DIR);
         }
-        
+
         $this->handleSiteFiles($otherFiles);
 
         if (@$this->configs['enableBlog']) {
@@ -196,9 +196,15 @@ class SiteBuilder
      */
     private function getSiteFiles()
     {
-        return array_filter($this->filesystem->allFiles(KATANA_CONTENT_DIR), function (SplFileInfo $file) {
+        $files = array_filter($this->filesystem->allFiles(KATANA_CONTENT_DIR), function (SplFileInfo $file) {
             return ! Str::startsWith($file->getRelativePathName(), $this->includesDirectory);
         });
+
+        if ($this->filesystem->exists(KATANA_CONTENT_DIR.'/.htaccess')) {
+            $files[] = new SplFileInfo(KATANA_CONTENT_DIR.'/.htaccess', '', '.htaccess');
+        }
+
+        return $files;
     }
 
     /**
