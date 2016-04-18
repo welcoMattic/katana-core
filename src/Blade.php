@@ -34,7 +34,7 @@ class Blade
     }
 
     /**
-     * Register the @markdown blade directives.
+     * Register the @markdown and @endmarkdown blade directives.
      *
      * @return void
      */
@@ -59,7 +59,9 @@ class Blade
         $this->bladeCompiler->directive('url', function ($expression) {
             $expression = substr($expression, 1, - 1);
 
-            return "<?php echo str_replace(['///', '//'], '/', \$base_url.'/'.trim($expression, '/').'/');  ?>";
+            $trailingSlash = ! str_contains($expression, '.') ? '/' : '';
+
+            return "<?php echo str_replace(['///', '//'], '/', \$base_url.'/'.trim({$expression}, '/').'{$trailingSlash}');  ?>";
         });
     }
 }
