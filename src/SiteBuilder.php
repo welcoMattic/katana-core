@@ -123,6 +123,7 @@ class SiteBuilder
         if (@$this->configs['enableBlog']) {
             $this->handleBlogPostsFiles($blogPostsFiles);
             $this->buildBlogPagination();
+            $this->buildRSSFeed();
         }
     }
 
@@ -243,6 +244,22 @@ class SiteBuilder
     private function buildBlogPagination()
     {
         $builder = new BlogPaginationBuilder(
+            $this->filesystem,
+            $this->viewFactory,
+            $this->viewsData
+        );
+
+        $builder->build();
+    }
+
+    /**
+     * Build the blog RSS feed.
+     *
+     * @return void
+     */
+    private function buildRSSFeed()
+    {
+        $builder = new RSSFeedBuilder(
             $this->filesystem,
             $this->viewFactory,
             $this->viewsData
