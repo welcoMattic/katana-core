@@ -52,17 +52,28 @@ class MarkdownFileBuilder
     protected $cached;
 
     /**
+     * The site configurations.
+     *
+     * @var array
+     */
+    private $configs;
+
+    /**
      * MarkdownFileBuilder constructor.
      *
-     * @param Filesystem $filesystem
-     * @param Factory $viewFactory
+     * @param Filesystem  $filesystem
+     * @param Factory     $viewFactory
+     * @param SplFileInfo $file
+     * @param array       $data
+     * @param array       $configs
      */
-    public function __construct(Filesystem $filesystem, Factory $viewFactory, SplFileInfo $file, array $data)
+    public function __construct(Filesystem $filesystem, Factory $viewFactory, SplFileInfo $file, array $data, array $configs)
     {
         $this->filesystem = $filesystem;
         $this->viewFactory = $viewFactory;
         $this->file = $file;
         $this->data = $data;
+        $this->configs = $configs;
 
         $parsed = Markdown::parseWithYAML($this->file->getContents());
 
@@ -103,9 +114,12 @@ class MarkdownFileBuilder
         $sections = '';
 
         foreach ($this->fileYAML as $name => $value) {
+            if ($name === 'post::date' && array_key_exists('dateFormat', $this->configs)) {
+                $value = date($this->configs['dateFormat'], strtotime($value));
+            }
             $sections .= "@section('$name', '".addslashes($value)."')\n\r";
         }
-
+        
         return
             "@extends('{$this->fileYAML['view::extends']}')
             $sections

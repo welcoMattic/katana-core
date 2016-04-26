@@ -69,8 +69,9 @@ class SiteBuilder
      * SiteBuilder constructor.
      *
      * @param Filesystem $filesystem
-     * @param Factory $viewFactory
-     * @param string $environment
+     * @param Factory    $viewFactory
+     * @param string     $environment
+     * @param bool       $forceBuild
      */
     public function __construct(Filesystem $filesystem, Factory $viewFactory, $environment, $forceBuild = false)
     {
@@ -172,7 +173,7 @@ class SiteBuilder
     private function handleSiteFiles($files)
     {
         foreach ($files as $file) {
-            $this->fileHandler->handle($file);
+            $this->fileHandler->handle($file, $this->configs);
         }
     }
 
@@ -186,7 +187,7 @@ class SiteBuilder
     private function handleBlogPostsFiles($files)
     {
         foreach ($files as $file) {
-            $this->blogPostHandler->handle($file);
+            $this->blogPostHandler->handle($file, $this->configs);
         }
     }
 
@@ -218,7 +219,7 @@ class SiteBuilder
     private function readBlogPostsData($files)
     {
         foreach ($files as $file) {
-            $this->postsData[] = $this->blogPostHandler->getPostData($file);
+            $this->postsData[] = $this->blogPostHandler->getPostData($file, $this->configs);
         }
     }
 

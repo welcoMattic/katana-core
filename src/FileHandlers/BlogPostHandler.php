@@ -11,10 +11,11 @@ class BlogPostHandler extends BaseHandler
      * Get the blog post data.
      *
      * @param SplFileInfo $file
+     * @param array       $configs
      *
      * @return \stdClass
      */
-    public function getPostData(SplFileInfo $file)
+    public function getPostData(SplFileInfo $file, array $configs)
     {
         $this->file = $file;
 
@@ -37,6 +38,10 @@ class BlogPostHandler extends BaseHandler
 
         // Remove 'post::' from $postData keys
         foreach ($postData as $key => $val) {
+            if (str_replace('post::', '', $key) === 'date' && array_key_exists('dateFormat', $configs)) {
+                $val = date($configs['dateFormat'], strtotime($val));
+            }
+
             $postData[str_replace('post::', '', $key)] = $val;
 
             unset($postData[$key]);

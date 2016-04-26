@@ -41,9 +41,17 @@ class BaseHandler
     public $viewsData = [];
 
     /**
+     * The site configurations.
+     *
+     * @var array
+     */
+    private $configs;
+
+    /**
      * AbstractHandler constructor.
      *
      * @param Filesystem $filesystem
+     * @param Factory    $viewFactory
      */
     public function __construct(Filesystem $filesystem, Factory $viewFactory)
     {
@@ -55,11 +63,12 @@ class BaseHandler
      * Convert a blade view into a site page.
      *
      * @param SplFileInfo $file
-     *
-     * @return void
+     * @param array       $configs
      */
-    public function handle(SplFileInfo $file)
+    public function handle(SplFileInfo $file, array $configs)
     {
+        $this->configs = $configs;
+
         $this->file = $file;
 
         $this->viewPath = $this->getViewPath();
@@ -86,8 +95,6 @@ class BaseHandler
 
     /**
      * Get the content of the file after rendering.
-     *
-     * @param SplFileInfo $file
      *
      * @return string
      */
@@ -119,7 +126,7 @@ class BaseHandler
      */
     protected function renderMarkdown()
     {
-        $markdownFileBuilder = new MarkdownFileBuilder($this->filesystem, $this->viewFactory, $this->file, $this->viewsData);
+        $markdownFileBuilder = new MarkdownFileBuilder($this->filesystem, $this->viewFactory, $this->file, $this->viewsData, $this->configs);
 
         return $markdownFileBuilder->render();
     }
@@ -186,6 +193,8 @@ class BaseHandler
 
     /**
      * Get the file name without the extension.
+     *
+     * @param SplFileInfo $file
      *
      * @return string
      */
