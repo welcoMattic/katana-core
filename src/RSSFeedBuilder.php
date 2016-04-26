@@ -39,7 +39,7 @@ class RSSFeedBuilder
         $pageContent = $this->viewFactory->make($view, $this->viewsData)->render();
 
         $this->filesystem->put(
-            sprintf('%s/%s', KATANA_PUBLIC_DIR, 'feed.xml'),
+            sprintf('%s/%s', KATANA_PUBLIC_DIR, 'feed.rss'),
             $pageContent
         );
     }
